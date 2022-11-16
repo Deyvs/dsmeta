@@ -64,7 +64,8 @@
     justify-content: center;
 }
 
-.show-from-580px, .show-from-990px{
+.show-from-580px,
+.show-from-990px {
     display: none;
 }
 
@@ -84,11 +85,10 @@
     .dsmeta-sales-table tbody tr {
         height: 55px;
     }
-} 
+}
 
 @media (min-width: 990px) {
     .show-from-990px {
         display: table-cell;
     }
-} 
-
+}
