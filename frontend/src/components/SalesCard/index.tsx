@@ -18,33 +18,41 @@ function SalesCard() {
     const [sales, setSales] = useState<Sale[]>([]);
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/sales`)
+
+        // const dmin = `${minDate.getFullYear()}-${minDate.getMonth() < 10 ? "0" + (minDate.getMonth() + 1) : minDate.getMonth() + 1}-${minDate.getDate() < 10 ? "0" + minDate.getDate() : minDate.getDate()}`;
+        // const dmax = `${maxDate.getFullYear()}-${maxDate.getMonth() < 10 ? "0" + (maxDate.getMonth() + 1) : maxDate.getMonth() + 1}-${maxDate.getDate() < 10 ? "0" + maxDate.getDate() : maxDate.getDate()}`;
+        const dmin = minDate.toISOString().slice(0, 10);
+        const dmax = maxDate.toISOString().slice(0, 10);
+
+        axios.get(`${BASE_URL}/sales/?minDate=${dmin}&maxDate=${dmax}`)
             .then(response => {
                 setSales(response.data.content);
             }).catch((error) => {
                 alert("Ocorreu um erro ao buscar os itens");
             });
 
-    }, [])
+    }, [minDate, maxDate])
 
     return (
         <div className="dsmeta-card">
             <h2 className="dsmeta-sales-title">Vendas</h2>
             <div>
-                <div className="dsmeta-form-control-container">
+                <div id="datepicker-min" className="dsmeta-form-control-container">
                     <DatePicker
                         selected={minDate}
                         onChange={(date: Date) => { setMinDate(date) }}
                         className="dsmeta-form-control"
                         dateFormat="dd/MM/yyyy"
+                        placeholderText="Start Date"
                     />
                 </div>
-                <div className="dsmeta-form-control-container">
+                <div id="datepicker-max" className="dsmeta-form-control-container">
                     <DatePicker
                         selected={maxDate}
                         onChange={(date: Date) => { setMaxDate(date) }}
                         className="dsmeta-form-control"
                         dateFormat="dd/MM/yyyy"
+                        placeholderText="End Date"
                     />
                 </div>
             </div>
